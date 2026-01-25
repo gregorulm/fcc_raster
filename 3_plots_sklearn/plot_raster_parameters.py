@@ -82,21 +82,51 @@ for i_dataset, (dataset, algo_params) in enumerate(datasets):
     # ============
     threshold = 5
     min_size  = 5
-
     prec_1 = 0.9
     prec_2 = 0.73
-    rs_1   = raster.Raster(threshold, min_size, prec_1)
-    rs_2   = raster.Raster(threshold, min_size, prec_2)
+#    rs_1   = raster.Raster(threshold, min_size, prec_1)
+#    rs_2   = raster.Raster(threshold, min_size, prec_2)
+
+    rs_1   = raster.Raster(threshold, min_size, 0.9)
+    rs_2   = raster.Raster(threshold, min_size, 0.8)
+    rs_3   = raster.Raster(threshold, min_size, 0.75)
+    rs_4   = raster.Raster(threshold, min_size, 0.73)
+    #rs_5   = raster.Raster(threshold, min_size, 0.70)
+
+    #rs_6   = raster.Raster(threshold, 5, 0.73)
+    rs_7   = raster.Raster(threshold, 10, 0.73)
+    rs_8   = raster.Raster(threshold, 15, 0.73)
+
+    #rs_9   = raster.Raster(5, min_size, 0.73)
+    rs_10  = raster.Raster(10, min_size, 0.73)
+    rs_11  = raster.Raster(15, min_size, 0.73)
+
+    rs_12  = raster.Raster(10, 10, 0.73)
+    rs_13  = raster.Raster(15, 15, 0.73)
+    
+    
 
     clustering_algorithms = (
-        ('RASTER (prec. = 0.90)', rs_1),
-        ('RASTER (prec. = 0.73)', rs_2)
+        ('prec=0.90, τ=5, μ=5', rs_1),
+        ('prec=0.80, τ=5, μ=5', rs_2),
+        ('prec=0.75, τ=5, μ=5', rs_3),
+        ('prec=0.73, τ=5, μ=5', rs_4),
+       # ('RASTER (prec. = 0.73)', rs_5),
+       # ('prec=0.73, τ=5, μ=5', rs_6),
+        ('prec=0.73, τ=5, μ=10', rs_7),
+        ('prec=0.73, τ=5, μ=15', rs_8),
+       # ('prec=0.73, τ=5, μ=5', rs_9),
+        ('prec=0.73, τ=10, μ=5', rs_10),
+        ('prec=0.73, τ=15, μ=5', rs_11),
+        ('prec=0.73, τ=10, μ=10', rs_12),
+        ('prec=0.73, τ=15, μ=15', rs_13)
+        
     )
 
     for name, algorithm in clustering_algorithms:
         algorithm.fit(X)
         if hasattr(algorithm, 'labels_'):
-            y_pred = algorithm.labels_.astype(np.int)
+            y_pred = algorithm.labels_.astype(int)
         else:
             y_pred = algorithm.predict(X)
 
@@ -119,4 +149,5 @@ for i_dataset, (dataset, algo_params) in enumerate(datasets):
 
         plot_num += 1
 
-plt.show()
+#plt.show()
+plt.savefig('figureXX.pdf')
